@@ -1,0 +1,10 @@
+[
+  {
+    "labels": {
+      "alertname": "Test",
+      "severity": "warning"
+    },
+    "annotations": {
+      "summary": "test"
+    }
+}]

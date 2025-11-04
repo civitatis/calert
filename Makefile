@@ -32,7 +32,7 @@ build-docker: ## Build docker image.
 
 .PHONY: send-alert
 send-alert:
-	(cd docs/examples && bash ./send_alert.sh)
+	curl -s -X POST http://localhost:9093/api/v2/alerts -d@docs/examples/alertmanager_mock_payload.json -H 'Content-Type: application/json'
 
 .PHONY: dev-docker
 dev-docker: clean build ## Build and spawns docker containers for the entire suite (Alertmanager/Prometheus/calert).
