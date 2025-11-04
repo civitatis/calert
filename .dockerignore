@@ -1,0 +1,58 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Build outputs
+bin/
+*.bin
+dist/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Documentation
+*.md
+README
+LICENSE
+CHANGELOG
+docs/
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+Dockerfile.*
+docker-compose*.yml
+.dockerignore
+
+# Testing
+*_test.go
+testdata/
+coverage.*
+*.out
+
+# Release configuration
+.goreleaser.yml
+
+# Makefile (build logic now in Dockerfile)
+Makefile
+
+# Environment and configs (sample config is included)
+.env
+.env.*
+*.local.toml
+alertmanager.yml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log

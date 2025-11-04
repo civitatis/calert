@@ -1,0 +1,34 @@
+networks:
+  monitor-net:
+    driver: bridge
+
+services:
+  alertmanager:
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+    ports:
+      - 9093:9093
+    image: prom/alertmanager:latest
+    volumes:
+      - ./dev/alertmanager/config.yml:/etc/alertmanager/config.yml:ro
+    depends_on: [calert]
+    networks:
+      - monitor-net
+  calert:
+    container_name: calert
+    command: --config=/config/config.toml
+    build:
+      context: .
+      args:
+        BUILDSTR: ${BUILDSTR:-snapshot}
+    environment:
+      - GOCACHE=/app/.cache/go-build
+      - GOMODCACHE=/app/.cache/go-mod
+    ports:
+      - 6000:6000
+    volumes:
+      - ./cache/:/app/.cache
+      - ./config.toml:/config/config.toml
+    networks:
+      - monitor-net
+    restart: unless-stopped

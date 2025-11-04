@@ -28,6 +28,32 @@ You can find the list of docker images [here](https://github.com/mr-karan/calert
 docker pull ghcr.io/mr-karan/calert:latest
 ```
 
+#### Building from Source
+
+The Dockerfile uses a multi-stage build with a Go builder stage and a minimal distroless runtime. To build locally:
+
+**Basic build:**
+```bash
+docker build -t calert:latest .
+```
+
+**Build with version information:**
+```bash
+docker build \
+  --build-arg BUILDSTR=snapshot-$(git rev-parse --short HEAD) \
+  -t calert:latest .
+```
+
+**Build with custom UID/GID:**
+```bash
+docker build \
+  --build-arg CALERT_UID=999 \
+  --build-arg CALERT_GID=999 \
+  -t calert:latest .
+```
+
+The multi-stage build produces a minimal (~20MB) image based on Google's distroless static debian image.
+
 #### Custom Message Template
 
 Here's an example `docker-compose` config with a custom `message.tmpl` mounted inside the container:
