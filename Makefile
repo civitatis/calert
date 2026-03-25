@@ -4,6 +4,7 @@ LAST_COMMIT := $(shell git rev-parse --short HEAD)
 LAST_COMMIT_DATE := $(shell git show -s --format=%ci ${LAST_COMMIT})
 VERSION := $(shell git describe --tags)
 BUILDSTR := ${VERSION} (Commit: ${LAST_COMMIT_DATE} (${LAST_COMMIT}), Build: $(shell date +"%Y-%m-%d %H:%M:%S %z"))
+ALERTMANAGER_URL ?= http://localhost:9093
 
 .PHONY: build
 build: ## Build binary.
@@ -30,9 +31,10 @@ build-docker: ## Build docker image.
 	docker compose down
 	docker compose up
 
+
 .PHONY: send-alert
 send-alert:
-	curl -s -X POST http://localhost:9093/api/v2/alerts -d@docs/examples/alertmanager_mock_payload.json -H 'Content-Type: application/json'
+	curl -s -X POST $(ALERTMANAGER_URL)/api/v2/alerts -d@docs/examples/alertmanager_mock_payload.json -H 'Content-Type: application/json'
 
 .PHONY: dev-docker
 dev-docker: clean build ## Build and spawns docker containers for the entire suite (Alertmanager/Prometheus/calert).
