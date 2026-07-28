@@ -1,0 +1,10 @@
+name: calert
+title: Calert
+type: service
+docs: .
+description: Herramienta (fork de mr-karan/calert) que envía notificaciones de alertas de Prometheus Alertmanager a Google Chat.
+owner: whois-squad
+domains:
+  - infrastructure
+languages:
+  - name: Go
